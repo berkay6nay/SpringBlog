@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace = "fragments :: head">
+</head>
+<body>
+<div th:replace = "fragments :: navbar"></div>
+
+<form method = "post" th:action = "@{/post/createPost}" th:object = "${post}">
+  <h3>Post Title : </h3>
+  <input type="text" th:field = "*{title}" placeholder="enter the title">
+
+  <br/>
+
+  <h3>Post Body : </h3>
+  <input type="text" th:field = "*{body}" placeholder="write your post here...">
+
+  <button type="submit">Share post</button>
+
+</form>
+
+</body>
+</html>
