@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace = "fragments :: head">
+</head>
+<body>
+<div th:replace = "fragments :: navbar"></div>
+
+<h1>Register</h1>
+<form method="POST" th:action="@{/register}" id="registerForm">
+    <label for="username">Username: </label>
+    <input type="text" name="username"/><br/>
+    <label for="password">Password: </label>
+    <input type="password" name="password"/><br/>
+    <label for="email">Email: </label>
+    <input type="email" name="email"/><br/>
+
+    <button type="submit">Sign Up</button>
+
+</form>
+
+</body>
+</html>
