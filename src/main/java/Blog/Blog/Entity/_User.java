@@ -1,9 +1,6 @@
 package Blog.Blog.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor(access= AccessLevel.PRIVATE, force=true)
 @RequiredArgsConstructor
+@Table(name = "users")
 public class _User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -26,6 +24,7 @@ public class _User implements UserDetails {
     private final String username;
     private final String password;
     private final String email;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
