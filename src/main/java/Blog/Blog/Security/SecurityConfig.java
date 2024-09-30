@@ -34,13 +34,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/post").hasRole("USER")
+                        .requestMatchers("/post/createPost").hasRole("USER")
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/", "/**").permitAll()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login"))
-
+                .logout((logout) -> logout.logoutSuccessUrl("/login"))
                 .build();
     }
 

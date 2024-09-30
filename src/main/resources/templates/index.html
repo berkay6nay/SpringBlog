@@ -3,9 +3,17 @@
 </head>
 <body>
 <div th:replace = "fragments :: navbar"></div>
+
 <div th:each = "post : ${posts}">
-    <h2 th:text = "${post.title}"></h2>
-    <p th:text = "${post.body}"></p>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title" th:text = "${post.title}"></h5>
+            <p class="card-text" th:text="${#strings.substring(post.body, 0, 50)} + '...'"></p>
+            <a th:href="@{'post/postDetail/' + ${post.id}}" class="card-link">Go to post</a>
+            <a href="#" class="card-link" th:text = "${post.user.username}"></a>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

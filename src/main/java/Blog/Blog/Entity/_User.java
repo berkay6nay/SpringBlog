@@ -21,8 +21,11 @@ public class _User implements UserDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
     private final String username;
     private final String password;
+    @Column(unique = true)
     private final String email;
 
     @Override
