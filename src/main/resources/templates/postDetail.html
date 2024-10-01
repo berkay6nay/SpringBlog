@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace = "fragments :: head"></head>
 <body>
 <div th:replace = "fragments :: navbar"></div>
 
 <p th:text = "${post.body}"></p>
 
+<div class = "likeSection" id="likeButtonDiv"  sec:authorize = "isAuthenticated()">
+    <button id="likeButton" th:attr="data-postId=${post.id}, data-userId=${authentication.principal.id}">+Like</button>
+    <p class="mesaj"></p>
+</div>
+
 </body>
+<script th:src="@{/scripts.js}"></script>
 </html>
+
