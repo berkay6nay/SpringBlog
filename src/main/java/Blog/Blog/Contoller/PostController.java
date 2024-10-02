@@ -56,6 +56,7 @@ public class PostController {
             boolean hasUserLikedThePost = false;
             if(like.isPresent()){
                 hasUserLikedThePost = true;
+                model.addAttribute("like" , like.get());
             }
             model.addAttribute("post" , postToParse);
             model.addAttribute("hasUserLikedThePost" , hasUserLikedThePost);

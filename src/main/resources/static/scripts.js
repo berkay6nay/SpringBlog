@@ -15,7 +15,43 @@ $("#likeButton").click(
         $.ajax(
             {
                 type : "POST",
-                url : "/like",
+                url : "/actions/like",
+                data : formData,
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader(header, token);
+                },
+                success : function(state){
+                    if(state == "success"){
+                        window.location.replace("/post/postDetail/" + postId);
+                    }
+                    else{
+                        $(".likeSection>p.mesaj").html("Hata");
+                    }
+                }
+            }
+        );
+    }
+)
+
+$("#dislikeButton").click(
+    function(){
+
+        var likeId = $(this).attr("data-likeId");
+        var postId = $(this).attr("data-postId");
+
+        console.log("likeId" + likeId);
+
+        var formData = {
+            likeId : likeId
+        };
+
+         var token = $("meta[name='_csrf']").attr("content");
+         var header = $("meta[name='_csrf_header']").attr("content");
+
+        $.ajax(
+            {
+                type : "POST",
+                url : "/actions/dislike",
                 data : formData,
                 beforeSend: function(xhr){
                     xhr.setRequestHeader(header, token);

@@ -6,29 +6,26 @@ import Blog.Blog.Repository.LikeRepository;
 import Blog.Blog.Repository.PostRepository;
 import Blog.Blog.Repository.UserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/like")
+@RequestMapping("/actions")
 public class LikeController {
 
     private LikeRepository likeRepository;
     private PostRepository postRepository;
 
-    public LikeController(LikeRepository likeRepository , PostRepository postRepository , UserRepository userRepository){
+    public LikeController(LikeRepository likeRepository , PostRepository postRepository){
         this.likeRepository = likeRepository;
         this.postRepository = postRepository;
     }
 
-    @PostMapping
+    @PostMapping("/like")
     public String likeAPost(@RequestParam("postId") String postId , @AuthenticationPrincipal _User user){
-        Long userID = user.getId();
         Long postID = Long.parseLong(postId);
         System.out.println("" + postID);
         Like like = new Like();
@@ -43,4 +40,16 @@ public class LikeController {
         else return "error";
     }
 
+    @PostMapping("/dislike")
+    public String dislikeAPost(@RequestParam("likeId") String likeID){
+        try{
+            Long likeId = Long.parseLong(likeID);
+            likeRepository.deleteById(likeId);
+            return "success";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
+    }
 }

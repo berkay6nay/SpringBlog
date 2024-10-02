@@ -7,8 +7,10 @@
 <p th:text = "${post.body}"></p>
 
 <div class = "likeSection" id="likeButtonDiv">
-    <div class="likeButton" th:if = "${hasUserLikedThePost == true}"><button  id="dislikeButton" th:data-postId="${post.id}">-Dislike</button></div>
-    <div class="dislikeButton" th:if = "${hasUserLikedThePost == false}"><button  id="likeButton" th:data-postId="${post.id}">+Like</button></div>
+    <div class="dislikeButton" th:if = "${hasUserLikedThePost == true}"><button  id="dislikeButton"
+                                                                              th:data-postId="${post.id}"
+                                                                              th:data-likeId="${like.id}">-Dislike</button></div>
+    <div class="likeButton" th:if = "${hasUserLikedThePost == false}"><button  id="likeButton" th:data-postId="${post.id}"  >+Like</button></div>
     <p class="mesaj"></p>
 </div>
 
