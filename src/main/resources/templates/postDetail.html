@@ -6,12 +6,15 @@
 
 <p th:text = "${post.body}"></p>
 
-<div class = "likeSection" id="likeButtonDiv"  sec:authorize = "isAuthenticated()">
-    <button id="likeButton" th:attr="data-postId=${post.id}, data-userId=${authentication.principal.id}">+Like</button>
+<div class = "likeSection" id="likeButtonDiv">
+    <div class="likeButton" th:if = "${hasUserLikedThePost == true}"><button  id="dislikeButton" th:data-postId="${post.id}">-Dislike</button></div>
+    <div class="dislikeButton" th:if = "${hasUserLikedThePost == false}"><button  id="likeButton" th:data-postId="${post.id}">+Like</button></div>
     <p class="mesaj"></p>
 </div>
 
 </body>
-<script th:src="@{/scripts.js}"></script>
+<script th:src="@{/scripts.js}">
+
+</script>
 </html>
 

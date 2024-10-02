@@ -25,17 +25,19 @@ public class PostDataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //Post post1 = new Post(null , "First Post" , "Der erste Post bin Ich" , new Date());
-        //Post post2 = new Post(null , "Second Post" , "Der zweite Post bin Ich" , new Date());
+
 
         _User user = new _User("username" , passwordEncoder.encode("password") , "example@gmail.com");
         _User user2 = new _User("username2", passwordEncoder.encode("password") , "example2@gmail.com");
 
+        Post post1 = new Post(null , "First Post Of This App Am I" , "Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post.Attempt at creating a post." , new Date() , user2);
+        Post post2 = new Post(null , "Second Post Of This App Am I" , "Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post. Attempt at creating a post.Attempt at creating a post." , new Date() , user);
+
         userRepository.save(user);
         userRepository.save(user2);
 
-        //postRepository.save(post1);
-        //postRepository.save(post2);
+        postRepository.save(post1);
+        postRepository.save(post2);
 
     }
 }

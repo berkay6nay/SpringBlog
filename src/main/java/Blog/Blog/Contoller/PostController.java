@@ -1,12 +1,15 @@
 package Blog.Blog.Contoller;
+import Blog.Blog.Entity.Like;
 import Blog.Blog.Entity.Post;
 import Blog.Blog.Entity._User;
+import Blog.Blog.Repository.LikeRepository;
 import Blog.Blog.Repository.PostRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -14,9 +17,11 @@ import java.util.Optional;
 public class PostController {
 
     private PostRepository postRepository;
+    private LikeRepository likeRepository;
 
-    public PostController(PostRepository postRepository){
+    public PostController(PostRepository postRepository , LikeRepository likeRepository){
         this.postRepository = postRepository;
+        this.likeRepository = likeRepository;
     }
 
     @GetMapping("/createPost")
@@ -43,11 +48,17 @@ public class PostController {
     }
 
     @GetMapping("postDetail/{id}")
-    public String postDetail(Model model , @PathVariable("id") Long id ){
+    public String postDetail(Model model , @PathVariable("id") Long id , @AuthenticationPrincipal _User user){
         Optional<Post> post = postRepository.findById(id);
         if(post.isPresent()){
             Post postToParse = post.get();
+            Optional<Like> like = Optional.ofNullable(likeRepository.getLikeByUserIdAndPostId(postToParse.getId(), user.getId()));
+            boolean hasUserLikedThePost = false;
+            if(like.isPresent()){
+                hasUserLikedThePost = true;
+            }
             model.addAttribute("post" , postToParse);
+            model.addAttribute("hasUserLikedThePost" , hasUserLikedThePost);
             return "postDetail";
         }
         else{

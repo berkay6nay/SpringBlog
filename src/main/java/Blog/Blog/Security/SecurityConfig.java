@@ -34,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/post/createPost").hasRole("USER")
+                        .requestMatchers("/post/**").hasRole("USER")
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/", "/**").permitAll()
                 )
