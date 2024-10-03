@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace = "fragments :: head"></head>
+<head th:replace="fragments :: head">
+</head>
 <body>
-<div th:replace = "fragments :: navbar"></div>
+<div th:replace="fragments :: navbar"></div>
 
-<p th:text = "${post.body}"></p>
+<div class="container mt-4">
+    <!-- Post Title and Author -->
+    <div class="post-header mb-4">
+        <h2 th:text="${post.title}"></h2>
+        <p class="text-muted">Posted by <span th:text="${post.user.username}"></span> on <span th:text="${post.date}"></span></p>
+    </div>
 
-<div class = "likeSection" id="likeButtonDiv">
-    <div class="dislikeButton" th:if = "${hasUserLikedThePost == true}"><button  id="dislikeButton"
-                                                                              th:data-postId="${post.id}"
-                                                                              th:data-likeId="${like.id}">-Dislike</button></div>
-    <div class="likeButton" th:if = "${hasUserLikedThePost == false}"><button  id="likeButton" th:data-postId="${post.id}"  >+Like</button></div>
-    <p class="mesaj"></p>
+    <!-- Post Body -->
+    <div class="post-body">
+        <p th:text="${post.body}"></p>
+    </div>
+
+    <!-- Like/Dislike Section -->
+    <div class="likeSection mb-3" id="likeButtonDiv" th:if = "${loggedInUser != authorOfThePost}">
+        <div class="dislikeButton" th:if="${hasUserLikedThePost == true}">
+            <button id="dislikeButton" th:data-postId="${post.id}" th:data-likeId="${like.id}">- Dislike</button>
+        </div>
+        <div class="likeButton" th:if="${hasUserLikedThePost == false}">
+            <button id="likeButton" th:data-postId="${post.id}">+ Like</button>
+        </div>
+        <p class="mesaj"></p>
+    </div>
+
+    <!-- Number of Likes -->
+    <div class="numberOfLikes">
+        <p th:text="${numberOfLikes}">0</p> Likes
+    </div>
+
+    <!-- Comment Secition -->
+    <div class="comments p-4 border rounded bg-light">
+        <h4 class="mb-4">Comments</h4>
+
+        <!-- Comment Submission Form -->
+        <form class="mb-4">
+            <div class="form-group">
+                <label for="commentBody">Add a comment:</label>
+                <textarea class="form-control commentBody"
+                          name="commentBody"
+                          id="commentBody"
+                          rows="3"
+                          placeholder="Write your comment here..."
+                          required
+                          ></textarea>
+            </div>
+            <button th:data-postId = "${post.id}" type="button" class="btn btn-primary makeAComment">Submit</button>
+        </form>
+
+        <!-- Display Comments -->
+
+        <div th:if="${numberOfComments > 0}" th:each="comment : ${comments}" class="comment mb-3">
+            <div class="border-bottom pb-2">
+                <strong th:text="${comment.user.username}"></strong>
+                <p th:text="${comment.commentBody}"></p>
+                <small class="text-muted" th:text="${comment.date}"></small>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
+
+<script th:src="@{/scripts.js}"></script>
 </body>
-<script th:src="@{/scripts.js}">
-
-</script>
 </html>
-

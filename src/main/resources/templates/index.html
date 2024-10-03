@@ -4,16 +4,22 @@
 <body>
 <div th:replace = "fragments :: navbar"></div>
 
-<div th:each = "post : ${posts}">
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title" th:text = "${post.title}"></h5>
-            <p class="card-text" th:text="${#strings.substring(post.body, 0, 50)} + '...'"></p>
-            <a th:href="@{'post/postDetail/' + ${post.id}}" class="card-link">Go to post</a>
-            <a href="#" class="card-link" th:text = "${post.user.username}"></a>
+<div class="container">
+    <div class="row">
+        <div th:each="post : ${posts}" class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold" th:text="${post.title}"></h5>
+                    <p class="card-text text-muted" th:text="${#strings.substring(post.body, 0, 50)} + '...'"></p>
+                    <a th:href="@{'post/postDetail/' + ${post.id}}" class="btn btn-sm btn-primary">Read More</a>
+                    <p class="text-muted mt-2" th:text="${post.user.username}"></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 </body>
 </html>

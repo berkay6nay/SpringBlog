@@ -5,8 +5,6 @@
 <body>
 <div th:replace = "fragments :: navbar"></div>
 
-<h1>Login</h1>
-
 <div th:if="${error}">
     Unable to login. Check your username and password.
 </div>
@@ -14,12 +12,26 @@
 <p>New here? Click
     <a th:href="@{/register}">here</a> to register.</p>
 
-<form method="POST" th:action="@{/login}" id="loginForm">
-    <label for="username">Username: </label>
-    <input type="text" name="username" id="username" /><br/>
-    <label for="password">Password: </label>
-    <input type="password" name="password" id="password" /><br/>
-    <input type="submit" value="Login"/>
+<form method="POST" th:action="@{/login}" id="loginForm" class="p-4 border rounded shadow-sm bg-light">
+    <h2 class="mb-4 text-center">Login</h2>
+
+    <!-- Username Field -->
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Enter your username" required />
+    </div>
+
+    <!-- Password Field -->
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password" required />
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <input type="submit" class="btn btn-primary btn-block" value="Login" />
+    </div>
 </form>
+
 </body>
 </html>

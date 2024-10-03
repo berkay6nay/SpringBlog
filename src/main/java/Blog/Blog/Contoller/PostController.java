@@ -1,7 +1,9 @@
 package Blog.Blog.Contoller;
+import Blog.Blog.Entity.Comment;
 import Blog.Blog.Entity.Like;
 import Blog.Blog.Entity.Post;
 import Blog.Blog.Entity._User;
+import Blog.Blog.Repository.CommentRepository;
 import Blog.Blog.Repository.LikeRepository;
 import Blog.Blog.Repository.PostRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,10 +20,12 @@ public class PostController {
 
     private PostRepository postRepository;
     private LikeRepository likeRepository;
+    private CommentRepository commentRepository;
 
-    public PostController(PostRepository postRepository , LikeRepository likeRepository){
+    public PostController(PostRepository postRepository , LikeRepository likeRepository , CommentRepository commentRepository){
         this.postRepository = postRepository;
         this.likeRepository = likeRepository;
+        this.commentRepository = commentRepository;
     }
 
     @GetMapping("/createPost")
@@ -50,16 +54,30 @@ public class PostController {
     @GetMapping("postDetail/{id}")
     public String postDetail(Model model , @PathVariable("id") Long id , @AuthenticationPrincipal _User user){
         Optional<Post> post = postRepository.findById(id);
+
         if(post.isPresent()){
             Post postToParse = post.get();
             Optional<Like> like = Optional.ofNullable(likeRepository.getLikeByUserIdAndPostId(postToParse.getId(), user.getId()));
+            Integer numberOfLikes = likeRepository.getLikesByPostId(postToParse.getId()).size();
             boolean hasUserLikedThePost = false;
+            Long authorOfThePost = postToParse.getUser().getId();
+            Long loggedInUser = user.getId();
+            List<Comment> comments = commentRepository.getCommentsByPostId(postToParse.getId());
+            Integer numberOfComments = comments.size();
+
             if(like.isPresent()){
                 hasUserLikedThePost = true;
                 model.addAttribute("like" , like.get());
             }
+
             model.addAttribute("post" , postToParse);
             model.addAttribute("hasUserLikedThePost" , hasUserLikedThePost);
+            model.addAttribute("numberOfLikes" , numberOfLikes);
+            model.addAttribute("authorOfThePost" , authorOfThePost);
+            model.addAttribute("loggedInUser" , loggedInUser);
+            model.addAttribute("comments" , comments);
+            model.addAttribute("numberOfComments" , numberOfComments);
+
             return "postDetail";
         }
         else{

@@ -4,7 +4,6 @@ import Blog.Blog.Entity.Post;
 import Blog.Blog.Entity._User;
 import Blog.Blog.Repository.LikeRepository;
 import Blog.Blog.Repository.PostRepository;
-import Blog.Blog.Repository.UserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,0 +1,37 @@
+.likeSection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .likeButton button, .dislikeButton button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .dislikeButton button {
+            background-color: #dc3545;
+        }
+        .numberOfLikes {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+        .likeButton button:hover, .dislikeButton button:hover {
+            opacity: 0.8;
+        }
+        .post-body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .mesaj {
+            color: #6c757d;
+            font-style: italic;
+            margin-left: 10px;
+        }
