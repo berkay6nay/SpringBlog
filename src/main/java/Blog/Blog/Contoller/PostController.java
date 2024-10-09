@@ -6,6 +6,7 @@ import Blog.Blog.Entity._User;
 import Blog.Blog.Repository.CommentRepository;
 import Blog.Blog.Repository.LikeRepository;
 import Blog.Blog.Repository.PostRepository;
+import Blog.Blog.Repository.UserRepository;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,13 @@ public class PostController {
     private PostRepository postRepository;
     private LikeRepository likeRepository;
     private CommentRepository commentRepository;
+    private UserRepository userRepository;
 
-    public PostController(PostRepository postRepository , LikeRepository likeRepository , CommentRepository commentRepository){
+    public PostController(PostRepository postRepository , LikeRepository likeRepository , CommentRepository commentRepository , UserRepository userRepository){
         this.postRepository = postRepository;
         this.likeRepository = likeRepository;
         this.commentRepository = commentRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/createPost")
@@ -84,4 +87,22 @@ public class PostController {
             return "error";
         }
     }
+
+    @GetMapping("posts/{id}")
+    public String posts(@PathVariable("id") Long userId , Model model , @AuthenticationPrincipal _User user){
+        List<Post> posts = postRepository.getPostsByUserId(userId);
+        Boolean allowPostDeletion = user.getId().equals(userId);
+
+        Optional<_User> ownerOfPage = userRepository.findById(userId);
+        if(ownerOfPage.isPresent()){
+            String owner = ownerOfPage.get().getUsername();
+            model.addAttribute("owner" , owner);
+        }
+
+        model.addAttribute("posts" , posts);
+        model.addAttribute("allowPostDeletion" , allowPostDeletion);
+
+        return "posts";
+    }
+
 }

@@ -42,6 +42,18 @@ public class CommentController {
             return "error";
         }
     }
+    @PostMapping("deleteComment")
+    public String makeComment(@RequestParam("commentId") String commentId){
+        Long commentID = Long.parseLong(commentId);
+        try{
+            commentRepository.deleteById(commentID);
+            return "success";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
+    }
 
 
 }

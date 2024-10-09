@@ -3,7 +3,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        .likeButton button, .dislikeButton button {
+        .likeButton button, .dislikeButton button , .deleteCommentButton button {
             background-color: #28a745;
             color: white;
             border: none;
@@ -15,6 +15,11 @@
         .dislikeButton button {
             background-color: #dc3545;
         }
+
+        .deleteCommentButton button {
+                    background-color: #dc3545;
+                }
+
         .numberOfLikes {
             text-align: center;
             font-size: 20px;

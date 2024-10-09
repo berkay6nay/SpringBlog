@@ -59,6 +59,7 @@
                 <strong th:text="${comment.user.username}"></strong>
                 <p th:text="${comment.commentBody}"></p>
                 <small class="text-muted" th:text="${comment.date}"></small>
+                <div class = "deleteCommentButton" th:if = "${loggedInUser == comment.user.id}"><button id = "deleteCommentButton" th:data-commentId = "${comment.id}" th:data-postId = "${post.id}">- Delete </button></div>
             </div>
         </div>
     </div>
